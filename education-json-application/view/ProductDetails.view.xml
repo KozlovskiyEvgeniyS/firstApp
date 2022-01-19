@@ -1,0 +1,93 @@
+<mvc:View 
+	xmlns="sap.uxap"
+	xmlns:m="sap.m"
+	xmlns:form="sap.ui.layout.form"
+	xmlns:mvc="sap.ui.core.mvc"
+    controllerName="yauheni.kazlouski.app.controller.ProductDetails">
+    <ObjectPageLayout showFooter="{editModel>/EditIndicator}">
+	<headerTitle>
+		<ObjectPageDynamicHeaderTitle>
+			<breadcrumbs>
+				<m:Breadcrumbs currentLocationText="{i18n>NavToProductDetailsText}">
+					<m:Link text="{i18n>NavToSupplierListText}" press="onNavToSupplierListPress"/>
+					<m:Link text="{i18n>NavToSupplierDetailsText}" press="onNavToSupplierDetailsPress"/>
+				</m:Breadcrumbs>
+			</breadcrumbs>
+			<expandedHeading>
+				<m:HBox>
+					<m:Title text="{data>Name}"/>
+				</m:HBox>
+			</expandedHeading>
+			<actions>
+				<m:Button  
+                    text="Edit" 
+                    type="Emphasized"
+                    visible="{= !${editModel>/EditIndicator}}"
+                    press="onEditButtonPress"/>
+			</actions>
+		</ObjectPageDynamicHeaderTitle>
+	</headerTitle>
+    <sections>
+        <ObjectPageSection titleUppercase="false" title="General Information">
+            <subSections>
+                <ObjectPageSubSection titleUppercase="false" title="General Information">
+                    <blocks>
+                        <form:SimpleForm 
+                            editable="true"
+                            layout="ResponsiveGridLayout"
+                            labelSpanXL="3"
+                            labelSpanL="2"
+                            labelSpanS="6"
+                            adjustLabelSpan="false"
+                            emptySpanXL="4"
+                            emptySpanL="4"
+                            emptySpanM="4"
+                            columnsXL="1"
+                            columnsL="1"
+                            singleContainerFullSize="false">
+                            <form:content>
+                                <m:Label text="{i18n>ProductName}"/>
+				                <m:Text  text="{data>Name}"/>        
+                                <m:Label text="{i18n>ProductPrice}"/>
+                                <m:HBox>
+                                    <m:Text text="{data>Price} USD" visible="{= !${editModel>/EditIndicator}}"/>
+                                    <m:Input value="{data>Price}" visible="{editModel>/EditIndicator}"></m:Input>
+                                </m:HBox>
+                                <m:Label text="{i18n>ProductDescription}"/>
+                                <m:HBox>
+                                    <m:Text text="{data>Description}" visible="{= !${editModel>/EditIndicator}}"/>
+                                    <m:Input value="{data>Description}" visible="{editModel>/EditIndicator}"/>
+                                </m:HBox>
+                                <m:Label text="{i18n>ProductRating}"/>
+                                <m:HBox>
+                                    <m:RatingIndicator 
+                                    class="sapUiSmallMarginBottom" 
+                                    value="{data>Rating}" 
+                                    tooltip="Rating Tooltip"
+                                    editable="false"
+                                    visible="{= !${editModel>/EditIndicator}}"/>
+                                    <m:RatingIndicator 
+                                    class="sapUiSmallMarginBottom" 
+                                    value="{data>Rating}" 
+                                    tooltip="Rating Tooltip"
+                                    editable="true"
+                                    visible="{editModel>/EditIndicator}"/>
+                                </m:HBox>
+                                <m:Label text="{i18n>SapLink}"/>
+                                <m:Link text="www.sap.com" href="https://www.sap.com/cis/index.html"/>
+                            </form:content>
+                        </form:SimpleForm>
+                    </blocks>
+                </ObjectPageSubSection>
+            </subSections>
+        </ObjectPageSection>
+    </sections>
+    <footer>
+		<m:OverflowToolbar>
+			<m:ToolbarSpacer />
+			<m:Button text="Save" type="Emphasized" press="onSaveProductChangesPress"/>
+			<m:Button text="Cancel" type="Reject" press="onCancelProductChangesPress"/>
+		</m:OverflowToolbar>
+	</footer>
+	</ObjectPageLayout>
+</mvc:View>

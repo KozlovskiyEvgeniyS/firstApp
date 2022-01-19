@@ -1,0 +1,100 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core" >
+	<Dialog
+		id="createSupplierDialog"
+		title="{i18n>CreateSupplierDialogTitle}">
+		<f:SimpleForm
+			maxContainerCols="1"
+			layout="ResponsiveGridLayout"
+			labelSpanL="12"
+			labelSpanM="12"
+			emptySpanL="0"
+			emptySpanM="0"
+			columnsL="1"
+			columnsM="1">
+			<f:content>
+				<Label text="{i18n>CreateSupplierDialogNameLabel}" required="true"/>
+				<Input
+					id="newSupplierName"
+					fieldGroupIds="createNewSupplierInputs"
+					placeholder="{i18n>CreateSupplierDialogNameInputPlaceHolder}"
+					value="{
+						path: 'editModel>/SupplierTemplate/Name',
+						type: 'sap.ui.model.type.String',
+						constraints: {
+							minLength:1,
+							maxLength: 40
+						}
+					}"
+					change="onInputChange"/>
+				<Label text="{i18n>CreateSupplierDialogCountryLabel}" required="true"/>
+				<Input 
+					id="newSupplierCountry"
+					fieldGroupIds="createNewSupplierInputs"
+					placeholder="{i18n>CreateSupplierDialogCountryInputPlaceHolder}"
+					value="{
+						path: 'editModel>/SupplierTemplate/Address/Country',
+						type: 'sap.ui.model.type.String',
+						constraints: {
+							minLength:1,
+							maxLength: 40
+						}
+					}"
+					change="onInputChange"/>
+				<Label text="{i18n>CreateSupplierDialogStateLabel}" required="true"/>
+				<Input 
+					id="newSupplierState"
+					fieldGroupIds="createNewSupplierInputs"
+					placeholder="{i18n>CreateSupplierDialogStateInputPlaceHolder}"
+					value="{
+						path: 'editModel>/SupplierTemplate/Address/State',
+						type: 'sap.ui.model.type.String',
+						constraints: {
+							minLength:1,
+							maxLength: 40
+						}
+					}"
+					change="onInputChange"/>
+				<Label text="{i18n>CreateSupplierDialogCityLabel}" required="true"/>
+				<Input 
+					id="newSupplierCity"
+					fieldGroupIds="createNewSupplierInputs"
+					placeholder="{i18n>CreateSupplierDialogCityInputPlaceHolder}"
+					value="{
+						path: 'editModel>/SupplierTemplate/Address/City',
+						type: 'sap.ui.model.type.String',
+						constraints: {
+							minLength:1,
+							maxLength: 40
+						}
+					}"
+					change="onInputChange"/>
+				<Label text="{i18n>CreateSupplierDialogStreetLabel}" required="true"/>
+				<Input 
+					id="newSupplierStreet"
+					fieldGroupIds="createNewSupplierInputs"
+					placeholder="{i18n>CreateSupplierDialogStreetInputPlaceHolder}"
+					value="{
+						path: 'editModel>/SupplierTemplate/Address/Street',
+						type: 'sap.ui.model.type.String',
+						constraints: {
+							minLength:1,
+							maxLength: 40
+						}
+					}"
+					change="onInputChange"/>
+			</f:content>
+		</f:SimpleForm>
+		<buttons>
+			<Button 
+				type="Emphasized"
+				text="{i18n>CreateSupplierDialogCreateButton}" 
+				press="onVerifyInputs"/>
+			<Button 
+				text="{i18n>CreateSupplierDialogCancelButton}" 
+				press="onCancelCreateSupplier"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

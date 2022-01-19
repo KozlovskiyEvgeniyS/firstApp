@@ -1,0 +1,214 @@
+<mvc:View 
+    xmlns="sap.uxap"
+    xmlns:m="sap.m"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    controllerName="yauheni.kazlouski.app.controller.SupplierDetails">
+    <ObjectPageLayout 
+        id="supplierDeatilsPage"
+        showAnchorBar="true"
+        useIconTabBar="true"
+        upperCaseAnchorBar="false"
+        showFooter="{editModel>/EditIndicator}">
+        <headerTitle>
+            <ObjectPageDynamicHeaderTitle>
+                <heading>
+                    <m:Title text="{data>Name}"/>
+                </heading>
+                <breadcrumbs>
+                    <m:Breadcrumbs currentLocationText="{i18n>NavToSupplierDetailsText}">
+                        <m:Link text="{i18n>NavToSupplierListText}" press="onNavToSupplierListPress"/>
+                    </m:Breadcrumbs>
+                </breadcrumbs>
+                <actions>
+                    <m:Button 
+                        type="Emphasized"
+                        text="Delete Supplier"
+                        visible="{= !${editModel>/EditIndicator}}"
+                        press="onDeleteSupplier"/>
+                    <m:Button 
+                        type="Emphasized"
+                        text="Edit"
+                        visible="{= !${editModel>/EditIndicator}}"
+                        press="onEditButtonPress"/>
+                </actions>
+            </ObjectPageDynamicHeaderTitle>
+        </headerTitle>
+        <sections>
+            <ObjectPageSection title="{i18n>SupplierProduct}">
+                <subSections>
+                    <ObjectPageSubSection >
+                        <blocks>
+                            <m:Table
+                                id="productsTable"
+                                mode= "{
+                                    path: 'editModel>/EditIndicator',
+                                    formatter: '.formatter.productsTableModeFormatter'
+                                }"
+                                selectionChange="onProductsTableSelectionChange"
+                                updateFinished="onProductsTableUpdateFinished"
+                                sticky="ColumnHeaders"
+                                items="{data>Products}">
+                                <m:headerToolbar>
+                                    <m:OverflowToolbar design="Transparent">
+                                        <m:Title text="{i18n>TableTitleText}" class="sapUiMediumMarginBegin"/>
+                                        <m:ToolbarSpacer/>
+                                        <m:Button 
+                                            text="Delete Products"
+                                            enabled="{viewModel>/deleteProductsButtonEnabled}"
+                                            visible="{editModel>/EditIndicator}"
+                                            press="onDeleteProducts"/>
+                                        <m:Button 
+                                            text="Create New Product"
+                                            visible="{editModel>/EditIndicator}"
+                                            press="onCreateNewProductPress"/>
+                                        <m:SearchField  
+                                            id="searchProductField"
+                                            search="onProductsSearch"
+                                            width="30%" 
+                                            placeholder="{i18n>ProductSearchPlaceholder}"/>
+                                    </m:OverflowToolbar>
+                                </m:headerToolbar>
+                                <m:columns>
+                                    <m:Column>
+                                        <m:HBox alignItems="Center">
+                                            <m:Text text="{i18n>NameColumn}" wrapping="false"/>
+                                        </m:HBox>
+                                    </m:Column>
+                                    <m:Column >
+                                        <m:HBox>
+                                            <m:Text text="{i18n>DescriptionColumn}" wrapping="false"/>
+                                        </m:HBox>
+                                    </m:Column>
+                                    <m:Column>
+                                        <m:HBox>
+                                            <m:Text text="{i18n>ReleaseDateColumn}" wrapping="false"/>
+                                        </m:HBox>
+                                    </m:Column>
+                                    <m:Column>
+                                        <m:HBox alignItems="Center">
+                                            <m:Text text="{i18n>DiscontinuedDateColumn}" wrapping="false"/>
+                                        </m:HBox>
+                                    </m:Column>
+                                    <m:Column>
+                                        <m:HBox alignItems="Center">
+                                            <m:Text text="{i18n>PriceColumn}" wrapping="false"/>
+                                        </m:HBox>
+                                    </m:Column>
+                                    <m:Column>
+                                        <m:HBox alignItems="Center">
+                                            <m:Text text="{i18n>RatingColumn}" wrapping="false"/>
+                                        </m:HBox>
+                                    </m:Column>
+                                </m:columns>
+                                <m:items>
+                                    <m:ColumnListItem
+                                        press="onProductsTableListItemPress"
+                                        type="Navigation">
+                                        <m:Text text="{data>Name}"/>
+                                        <m:HBox>
+                                            <m:Text text="{data>Description}" visible="{= !${editModel>/EditIndicator}}"/>
+                                            <m:Input value="{data>Description}" visible="{editModel>/EditIndicator}"/>
+                                        </m:HBox>
+                                        <m:Text 
+                                            wrapping="false"
+                                            text="{
+                                                path: 'data>ReleaseDate',
+                                                type: 'sap.ui.model.type.Date',
+                                                formatOptions: {
+                                                    pattern: 'yyyy-mm-dd',
+                                                    source: {
+                                                        pattern: 'yyyy-mm-ddTHH:mm:ss'
+                                                    }
+                                                }
+                                            }"/>  
+                                        <m:Text
+                                            wrapping="false"
+                                            text="{
+                                                path: 'data>DiscontinuedDate',
+                                                formatter: '.formatter.discountDateFormatter',
+                                                type: 'sap.ui.model.type.Date',
+                                                formatOptions: {
+                                                    pattern: 'yyyy-mm-dd',
+                                                    source: {
+                                                        pattern: 'yyyy-mm-ddTHH:mm:ss'
+                                                    }
+                                                }
+                                            }"/>
+                                        <m:HBox>
+                                            <m:FormattedText 
+                                                htmlText="{
+                                                    path: 'data>Price',
+                                                    formatter: '.formatter.priceText'}" 
+                                                visible="{= !${editModel>/EditIndicator}}"/>
+                                            <m:Input 
+                                                value="{data>Price}" 
+                                                visible="{editModel>/EditIndicator}"
+                                                type="Number"/>
+                                        </m:HBox>
+                                        <m:HBox>
+                                            <m:RatingIndicator 
+                                            class="sapUiSmallMarginBottom" 
+                                            value="{data>Rating}" 
+                                            editable="false"
+                                            visible="{= !${editModel>/EditIndicator}}"/>
+                                            <m:RatingIndicator 
+                                            class="sapUiSmallMarginBottom" 
+                                            value="{data>Rating}" 
+                                            visible="{editModel>/EditIndicator}"/>
+                                        </m:HBox>
+                                    </m:ColumnListItem>
+                                </m:items>
+                            </m:Table>
+                        </blocks>
+                    </ObjectPageSubSection>
+                </subSections>
+            </ObjectPageSection>
+            <ObjectPageSection title="{i18n>SupplierDescription}">
+                <subSections>
+                    <ObjectPageSubSection>
+                        <blocks>
+                            <form:SimpleForm 
+                                editable="true"
+                                layout="ResponsiveGridLayout"
+                                labelSpanXL="1"
+                                labelSpanL="2"
+                                labelSpanS="6"
+                                adjustLabelSpan="false"
+                                emptySpanXL="4"
+                                emptySpanL="4"
+                                emptySpanM="4"
+                                columnsXL="1"
+                                columnsL="1"
+                                singleContainerFullSize="false">
+                                <form:title>
+                                    <core:Title text="{i18n>SupplierAddressText}"/>
+                                </form:title>
+                                <form:content>
+                                    <m:Label text="{i18n>SupplierCountryText}"/>
+				                    <m:Text  text="{data>Address/Country}"/>        
+                                    <m:Label text="{i18n>SupplierStateText}"/>
+				                    <m:Text  text="{data>Address/State}"/>        
+                                    <m:Label text="{i18n>SupplierCityText}"/>
+				                    <m:Text  text="{data>Address/State}"/>        
+                                    <m:Label text="{i18n>SupplierStreetText}"/>
+				                    <m:Text  text="{data>Address/Street}"/>
+                                    <m:Label text="{i18n>SapLink}"/>
+                                    <m:Link text="www.sap.com" href="https://www.sap.com/cis/index.html"/>
+                            </form:content>
+                        </form:SimpleForm>
+                        </blocks>
+                    </ObjectPageSubSection>
+                </subSections>
+            </ObjectPageSection>
+        </sections>
+        <footer>
+            <m:OverflowToolbar>
+                <m:ToolbarSpacer/>
+                <m:Button text="{i18n>SupplierDetailsFooterSaveButton}" type="Emphasized" press="onSaveProductChangesPress"/>
+                <m:Button text="{i18n>SupplierDetailsFooterCancelButton}" type="Reject" press="onCancelProductChangesPress"/>
+            </m:OverflowToolbar>
+        </footer>
+    </ObjectPageLayout>
+</mvc:View>

@@ -1,0 +1,118 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core" >
+    
+    <Dialog id="productDialogTitle" title="{i18n>ProductDialogTitle}">
+        <f:SimpleForm
+            maxContainerCols="1"
+            layout="ResponsiveGridLayout"
+            labelSpanL="12"
+            labelSpanM="12"
+            columnsL="1">
+            <f:content>
+                <Label text="{i18n>ProductDialogNameLabel}" required="true"/>
+                <Input
+                    id="newProductName"
+                    fieldGroupIds="newProductInputs"
+                    placeholder="{i18n>ProductDialogNameInputPlaceholder}"
+                    value="{
+                        path: 'editModel>/ProductTemplate/Name',
+                        type: 'sap.ui.model.type.String',
+                        constraints: {
+                            minLength:3,
+                            maxLength: 60
+                        }
+                    }"
+                    change="onInputChange"/>
+                <Label text="{i18n>ProductDialogDescriptionLabel}" required="true"/>
+                <Input
+                    id="newProductDescription"
+                    fieldGroupIds="newProductInputs"
+                    placeholder="{i18n>ProductDialogDescriptionInputPlaceholder}"
+                    value="{
+                        path: 'editModel>/ProductTemplate/Description',
+                        type: 'sap.ui.model.type.String',
+                        constraints: {
+                            minLength:3,
+                            maxLength: 60
+                        }
+                    }"
+                    change="onInputChange"/>
+                <Label text="{i18n>ProductDialogPriceLabel}" required="true"/>
+                <Input
+                    id="newProductPrice"
+                    fieldGroupIds="newProductInputs"
+                    type="Number"
+                    placeholder="{i18n>ProductDialogPriceInputPlaceholder}"
+                    value="{
+                        path: 'editModel>/ProductTemplate/Price',
+                        type: 'sap.ui.model.type.Integer',
+                        constraints: {
+                            minimum:1
+                        }
+                    }"
+                    change="onInputChange"/>
+                <Label text="{i18n>CreateStoreDialogReleaseDateLabel}" required="true"/>
+                <DatePicker
+                    id="newProductReleaseDate"
+                    fieldGroupIds="newProductInputs"
+                    maxDate="{viewModel>/maxSelectionDate}"
+                    value="{
+                        path : 'editModel>/ProductTemplate/ReleaseDate',
+                        type : 'sap.ui.model.type.Date',
+                        formatOptions: {
+                            pattern: 'yyyy-MM-dd',
+                            source: {
+                                pattern: 'yyyy-MM-ddTHH:mm:ss'
+                              }
+                        }
+                    }"
+                    placeholder="{i18n>CreateStoreDialogReleaseDateInputPlaceholder}"
+                    change="onInputChange"/>
+                <Label text="{i18n>CreateStoreDialogDiscountDateILabel}"/>
+                <DatePicker
+                    id="newProductDiscountDate"
+                    fieldGroupIds="newProductInputs"
+                    maxDate="{viewModel>/maxSelectionDate}"
+                    minDate="{viewModel>/minDiscontinuedDate}"
+                    value="{
+                        path : 'editModel>/ProductTemplate/DiscontinuedDate',
+                        type : 'sap.ui.model.type.Date',
+                        formatOptions: {
+                            pattern: 'yyyy-MM-dd',
+                            source: {
+                                pattern: 'yyyy-MM-ddTHH:mm:ss'
+                              }
+                        }
+                    }"
+                    placeholder="{i18n>CreateStoreDialogDiscountDateIInputPlaceholder}"
+                    change="onInputChange"/>	
+                <Label text="{i18n>ProductDialogRatingLabel}" required="true"/>
+                <Input
+                    id="newProductRating"
+                    fieldGroupIds="newProductInputs"
+                    type="Number"
+                    placeholder="{i18n>ProductDialogRatingInputPlaceholder}"
+                    value="{
+                        path: 'editModel>/ProductTemplate/Rating',
+                        type: 'sap.ui.model.type.Integer',
+                        constraints: {
+                            minimum:1,
+                            maximum: 5
+                        }
+                    }"
+                    change="onInputChange"/>
+            </f:content>
+        </f:SimpleForm>
+        <buttons>
+            <Button 
+                id="submitProductButton" 
+                text="Create" 
+                press="onVerifyInputs"/>
+            <Button 
+                text="{i18n>CreateProductDialogCancelButtonText}" 
+                press="onCancelCreateProduct"/>
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

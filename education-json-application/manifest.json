@@ -1,0 +1,120 @@
+{
+	"sap.app": {
+		"id": "yauheni.kazlouski.app",
+		"type": "application",
+		"i18n": "i18n/i18n.properties",
+		"title": "{{appTitle}}",
+		"description": "{{appDescription}}",
+		"applicationVersion": {
+			"version": "1.0.0"
+		},
+		"dataSources": {
+			"mainService":{
+				"uri": "http://localhost:3000/odata",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0"
+				}
+			}
+		}
+	},
+	"sap.ui": {
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		},
+		"supportedThemes": [
+			"sap_belize"
+		]
+	},
+	"sap.ui5": {
+		"rootView": "yauheni.kazlouski.app.view.App",
+		"routing": {
+			"config": {
+				"routerClass": "sap.m.routing.Router",
+				"viewType": "XML",
+				"viewPath": "yauheni.kazlouski.app.view",
+				"controlId": "RootApp",
+				"controlAggregation": "pages",
+				"bypassed": {
+					"target": [
+						"notFound"
+					]
+				},
+				"async": true
+			},
+			"routes": [
+				{
+					"pattern": "",
+					"name": "SuppliersOverview",
+					"target": [
+						"supplierOverview"
+					]
+				},
+				{
+					"pattern": "supplierDetails/{SupplierID}",
+					"name": "SupplierDetails",
+					"target": [
+						"supplierDetails"
+					]
+				},
+				{
+					"pattern": "supplierDetails/{SupplierID}/productDetails/{ProductID}",
+					"name": "ProductDetails",
+					"target": [
+						"productDetails"
+					]
+				}
+			],
+			"targets": {
+				"supplierOverview": {
+					"viewName": "SuppliersOverview",
+					"viewId": "supplierOverview",
+					"viewLevel": 1
+				},
+
+				"supplierDetails": {
+					"viewName": "SupplierDetails",
+					"viewId": "supplierDetails",
+					"viewLevel": 2
+				},
+
+				"productDetails": {
+					"viewName": "ProductDetails",	
+					"viewId": "productDetails",
+					"viewLevel": 3
+				},
+
+				"notFound": {
+					"viewName": "NotFound",
+					"viewId": "notFound"
+				}
+			}
+		},
+		"dependencies": {
+			"minUI5Version": "1.54.0",
+			"libs": {
+				"sap.m": {},
+				"sap.uxap": {}
+			}
+		},
+		"models": {
+			"data": {
+				"type": "sap.ui.model.json.JSONModel",
+				"uri": "model/data/Data.json"
+			},
+			"editModel": {
+				"type": "sap.ui.model.json.JSONModel",
+				"uri": "model/data/editMode.json"
+			},
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "yauheni.kazlouski.app.i18n.i18n",
+					"bundleLocale": "en"
+				}
+			}
+		}
+	}
+}

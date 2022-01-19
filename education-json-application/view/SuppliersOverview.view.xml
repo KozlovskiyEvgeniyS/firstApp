@@ -1,0 +1,109 @@
+<mvc:View
+    xmlns:mvc="sap.ui.core.mvc"	
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:core="sap.ui.core"
+    controllerName="yauheni.kazlouski.app.controller.SuppliersOverview">
+    <f:DynamicPage class="sapUiNoContentPadding">
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:heading>
+                    <Title text="{i18n>SupplierListPageTitle}"/>
+                </f:heading>
+                <f:breadcrumbs>
+                    <Breadcrumbs currentLocationText="{i18n>NavToSupplierListText}"/>
+                </f:breadcrumbs>
+            </f:DynamicPageTitle>
+        </f:title>
+        <f:header>
+            <f:DynamicPageHeader>
+                <fb:FilterBar
+                    filtersDialogClosed="onFiltersDialogClosed"
+                    search="onFilterBarSearchPress"
+                    showClearButton="true">
+                    <fb:filterGroupItems>
+                        <fb:FilterGroupItem 
+                            groupName="__$INTERNAL$" 
+                            name="A" 
+                            label="Search by All Properies" 
+                            partOfCurrentVariant="true"
+                            visibleInFilterBar="true">
+                            <fb:control>
+                                <SearchField 
+                                    id="supplierSearchField"
+                                    search="onSupplierSearch"/>
+                            </fb:control>
+                        </fb:FilterGroupItem>
+                        <fb:FilterGroupItem 
+                            groupName="__$INTERNAL$" 
+                            name="B" 
+                            label="Filter by Name" 
+                            partOfCurrentVariant="true"
+                            visibleInFilterBar="true">
+                            <fb:control>
+                                <Select
+                                    id="supplersNameFilter"
+                                    forceSelection="false"
+                                    items="{
+                                        path: 'data>/Suppliers',
+                                        sorter: {
+                                            path: 'Name'
+                                        },
+                                        filters: [
+                                            {path: 'Name', operator: 'NotStartsWith', value: ''}
+                                        ]
+                                    }">
+                                    <items>
+                                        <core:Item key="{data>Name}" text="{data>Name}" />	
+                                    </items>						
+                                </Select>
+                            </fb:control>
+                        </fb:FilterGroupItem>
+                    </fb:filterGroupItems>
+                </fb:FilterBar>
+            </f:DynamicPageHeader>
+        </f:header>
+        <f:content>
+            <Table
+                class="sapUiResponsiveContentPadding"
+                id="suppliersTable"
+                sticky="ColumnHeaders"
+                items="{data>/Suppliers}">
+                <headerToolbar>
+                    <OverflowToolbar design="Transparent">
+                        <Title text="{i18n>SuppliersTableTitleText}" class="sapUiMediumMarginBegin"/>
+                        <ToolbarSpacer/>
+                        <Button text="Create New Supplier" press="onCreateSupplierDialog"/>
+                    </OverflowToolbar>
+                </headerToolbar>
+                <columns>
+                    <Column>
+                        <Text text="{i18n>NameColumn}" wrapping="false"/>
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>DescriptionColumn}"></Text>
+                    </Column>
+                    <Column> 
+                        <Text text="{i18n>StatusColumn}"/>
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem
+                        press="onSuppliersTableListItemPress"
+                        type="Navigation"
+                        visible="{= ${data>Name} ? true : false}">
+                        <Text text="{data>Name}"/>
+                        <Text text="{data>Address/Country},{data>Address/State},{data>Address/City},{data>Address/Street}"/>
+                        <ObjectStatus 
+                            text="{data>EditStatus}"
+                            state="{
+                                path: 'data>EditStatus',
+                                formatter: '.formatter.supplierStatusFormatter'
+                            }"/>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </f:content>
+    </f:DynamicPage>
+</mvc:View>

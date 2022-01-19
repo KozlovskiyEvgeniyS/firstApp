@@ -1,0 +1,12 @@
+<mvc:View
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m">
+	<MessagePage
+		title="{i18n>NotFoundPageTitle}}"
+		text="{i18n>NotFoundPageText}"
+		icon="{sap-icon://document}"
+		id="page"
+		description="{i18n>NotFoundPageDescription}">
+	</MessagePage>
+
+</mvc:View>

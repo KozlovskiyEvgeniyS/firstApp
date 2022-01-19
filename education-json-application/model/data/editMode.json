@@ -1,0 +1,31 @@
+{
+    "EditIndicator": false,
+    "EditSuppliersArray": [],
+    "PreviousSuppliersArray": [],
+    "CreatedSuppliers": [],
+    "PreviosSuppliersData": {},
+    "SupplierEditStatus": {
+        "Empty": "",
+        "Draft": "Draft",
+        "Unsaved": "Unsaved/Draft"
+    },
+    "SupplierTemplate": {
+        "ID" : "",
+        "Name" : "",
+        "Address": {
+            "Street": "",
+            "City": "",
+            "State": "",
+            "Country": ""
+        },
+        "Products": []
+    },
+    "ProductTemplate": {
+        "Name" : "",
+        "Description": "",
+        "ReleaseDate": "",
+        "DiscontinuedDate": "",
+        "Rating": 0,
+        "Price": ""
+    }
+}
